@@ -154,3 +154,53 @@
   asyncOperation.allowSceneActivation = false;
   await WaitLoading(asyncOperation);
   ```
+
+## Правила блоков кода `{}`
+> Блоки кода создаются, если выполняется несколько операций слишком одиночная операции слишком длинная (100 и более символов)
+
+### блок для `if-else`
+* одиночный `if`, который при истинном условии выходит из функции или возвращает `false`/`true`/`null`/`default`/`Exception `
+  ```C#
+  private void Method()
+  {
+     if (!_isGame)
+         return;
+
+     // ...
+
+     if (_isSigned)
+         return;
+  }
+  ```
+* если один из блоков в цепочке `if-else` может быть записан в одну строку (или должен быть записан блоком), то необходимо проверить остальные `if` в этой цепочке. Если остальные нельзя сократить, то все `if` должны быть с блоком
+  ```C#
+  // неправильно!
+
+  if (_isAdmin)
+  {
+     var admin = SignInAsAnmin();
+     Debug.Log("Admin ID:" + admin.ID);
+  }
+  else if (_isUser)
+     SingInAsUser();
+  else
+     throw new UnknownSignInException()
+  ```
+  ```C#
+  // Нужно 
+  // добавлен блок в цепочке `if-else`
+
+  if (_isAdmin)
+  {
+     var admin = SignInAsAnmin();
+     Debug.Log("Admin ID:" + admin.ID);
+  }
+  else if (_isUser)
+  {
+     SingInAsUser();
+  }
+  else
+  {
+     throw new UnknownSignInException();
+  }
+  ```
